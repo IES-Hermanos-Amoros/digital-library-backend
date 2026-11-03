@@ -39,7 +39,7 @@ export class ReviewController {
 
   @Post()
   @UseGuards(ThrottlerGuard)
-  @Throttle({ default: { ttl: 600000, limit: 2 } })
+  @Throttle({ default: { ttl: 600000, limit: 100 } })
   create(
     @Body() createReviewDto: CreateReviewDto,
     @Req() req: Request,
