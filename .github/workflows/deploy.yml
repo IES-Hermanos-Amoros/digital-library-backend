@@ -1,0 +1,35 @@
+name: Deploy Backend Library HA to Azure PM2
+
+on:
+  push:
+    branches: [ main ] # O la rama de producción que utilices
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Azure via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.AZURE_HOST }}
+          username: ${{ secrets.AZURE_USER }}
+          key: ${{ secrets.AZURE_SSH_KEY }}
+          script: |
+            cd /ruta/absoluta/de/tu/proyecto/en/azure
+            
+            echo "📥 Actualizando código desde GitHub..."
+            git pull origin main
+            
+            echo "📦 Instalando dependencias..."
+            npm install
+            
+            echo "🔨 Compilando la aplicación..."
+            npm run build
+            
+            echo "🚀 Reiniciando PM2..."
+            pm2 restart digital-library-backend --update-env
+            
+            echo "✅ ¡Despliegue completado con éxito!"
