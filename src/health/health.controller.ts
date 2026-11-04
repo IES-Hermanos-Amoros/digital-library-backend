@@ -11,4 +11,9 @@ export class HealthController {
   check() {
     return this.healthService.check();
   }
+
+  @Get('probe')
+  probe() {
+    return this.healthService.probe();
+  }
 }
