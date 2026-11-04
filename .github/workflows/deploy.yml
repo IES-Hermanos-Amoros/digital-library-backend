@@ -18,10 +18,14 @@ jobs:
           username: ${{ secrets.AZURE_USER }}
           key: ${{ secrets.AZURE_SSH_KEY }}
           script: |
-            cd /ruta/absoluta/de/tu/proyecto/en/azure
+            set -e
+
+            cd ~/digital-library-backend
             
             echo "📥 Actualizando código desde GitHub..."
-            git pull origin main
+            git fetch origin main
+            git checkout main
+            git reset --hard origin/main
             
             echo "📦 Instalando dependencias..."
             npm install
@@ -32,4 +36,6 @@ jobs:
             echo "🚀 Reiniciando PM2..."
             pm2 restart digital-library --update-env
             
+            pm2 save
+
             echo "✅ ¡Despliegue completado con éxito!"
