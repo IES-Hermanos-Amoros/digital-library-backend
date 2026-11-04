@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 export class HealthService {
   check() {
     return {
-      status: 'ok',
+      status: 'ok-workflow-github-actions',
       timestamp: new Date().toISOString(),
     };
   }
